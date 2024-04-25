@@ -1,0 +1,106 @@
+load "piecescore.sal"
+load "drumscore.sal"
+load "spectral-analysis.lsp"
+load "spectral-process.lsp"
+exec *autonorm-previous-peak*
+function BNOTE(pitch: 60, vel: 50)
+  begin
+    return pluck(pitch) * .01 * vel
+  end
+
+function BSOUND(pitch: 60, vel: 50, dur: 10)
+  begin
+   with pitchpat = make-palindrome(make-random(list(pitch - 24, pitch - 22, pitch - 20, pitch - 17, pitch - 15)))
+     return timed-seq(score-gen(score-len: dur, ioi: 1,  pitch: next(pitchpat), vel: vel, name: quote(BNOTE)))
+  end
+
+
+function NSOUND(pitch: 60, vel: 100)
+ begin
+return seq(sim(pluck(pitch), pluck(pitch + 4), pluck(pitch + 7)), sim(pluck(pitch), pluck(pitch + 4), pluck(pitch + 7))) * vel * 0.01
+  end
+
+function RSOUND(pitch: 60, vel: 100, frompitch: 60)
+  begin
+ return piano-note(1, pitch, vel) * 1.5
+  end
+
+function cross-synth-fn(src, frame, src2, count)
+  begin
+    with frame2 = sa-next(src2), mag
+    if null(frame2) then return nil
+    set mag = sa-magnitude(frame2)
+    set frame[0] *= mag[0]
+    loop
+      for i from 1 below length(frame) - 1 by 2
+      for j from 1
+      set frame[i] *= mag[j],
+          frame[i + 1] *= mag[j]
+    end
+    set frame[length(frame) - 1] *= frame2[length(frame2) - 1]
+    if count % 10 = 0 then display "phase-fn", count
+    return list(frame, src2, count + 1)
+  end
+
+function GENKSOUND(len: 256)
+  begin
+    with sa1 = sa-init(input: "./hikaru.wav",
+                       skip-period: (len / 4) / 44100.0,
+                       fft-dur: len / 44100.0,
+                       window: :none),
+         sa2 = sa-init(input: "./strums.wav",
+                      skip-period: (len / 4) / 44100.0, 
+                      fft-dur: len / 44100.0,
+                      window: :none),
+         sp = sp-init(sa2, quote(cross-synth-fn), sa1, 0)
+    exec sa-info(sa1)
+    return cue(sp-to-sound(sp) * .5) ~~ 1
+  end
+
+function KSOUND(pitch: 60)
+  begin
+      return to-mono(s-read("./lyric.wav")) * pwl(0,0,1,3,8,3,11)
+  end
+
+function QSOUND(pitch: 60, vel: 50)
+ begin
+ return flute(pitch, env(0.01, 0, 0.1, 0.7, 0.7, 0.7, 1)) * vel * 0.01
+  end
+
+
+function kick(pitch: 61, vel: 100)
+ begin
+ return to-mono(s-read("./kick-8.wav"))
+
+  end
+
+function tom(pitch: 62, vel: 100)
+ begin
+ return  to-mono(s-read("./big-tom-1.wav"))
+  end
+
+function hihat(pitch: 64, vel: 100)
+ begin
+ return  to-mono(s-read("./hi-closing-1.wav"))
+  end
+
+function cymbal(pitch: 65, vel: 100)
+ begin
+ return to-mono(s-read("./20-ride-2.wav"))
+  end
+
+function snare(pitch: 65, vel: 100)
+ begin
+ return to-mono(s-read("./snare-5.wav"))
+  end
+
+
+function hihathit(pitch: 67, vel: 100)
+ begin
+ return to-mono(s-read("./hi-closed-6.wav"))
+  end
+
+
+
+;exec score-play(score-sort(score-merge(*drumscore*,*piecescore*)))
+exec score-play({{0 1 {BSOUND pitch: 69}}})
