@@ -33,4 +33,4 @@ Make sure you have successfully run tpprep.py. Then, you can run tp.sal, which w
 -The Queen sound is a flute sound
 -The king sound takes the amplitude from grains in a wav file containing an interview of Hikaru Nakamura and applies them to the chord progression called strums.wav
 
-Running tp.sal will result in a orchesstraoutput.wav sound file of roughly the specified duration that can be applied to the animation mp4 video to get the full audio/video product. 
+Running tp.sal will result in a orchesstraoutput.wav sound file of roughly the specified duration that can be applied to the animation mp4 video to get the full audio/video product.  
