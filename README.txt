@@ -9,6 +9,8 @@ Next, install all required packages for gameanimator.py, gameextractor.py, datat
 -pawnsequencer.py will read the positions.txt file and produce score elements for the pawns  
 -tpprep.py will run all of the above in order, to produce two sal files, drumscore.sal and piecescore.sal which are loaded into nyquist script tp.sal. change the pgn_file argument to whatever the path to your .pgn file is, or use the one provided.   
 
+Currently:
+Rooks score events are created such that they are played when a rook note is made, 
 
 nyquist:
 A guide to install Nyquist can be found here: https://www.cs.cmu.edu/~15322/resources/
@@ -21,4 +23,4 @@ Make sure you have successfully run tpprep.py. Then, you can run tp.sal, which w
 -The Queen sound is a flute sound
 -The king sound takes the amplitude from grains in a wav file containing an interview of Hikaru Nakamura and applies them to the chord progression called strums.wav
 
-Running tp.sal will result in a .wav sound file of roughly the specified duration that can be applied to the animation mp4 video to get the full audio/video product. 
+Running tp.sal will result in a orchesstraoutput.wav sound file of roughly the specified duration that can be applied to the animation mp4 video to get the full audio/video product. 
