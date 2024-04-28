@@ -102,5 +102,4 @@ function hihathit(pitch: 67, vel: 100)
 
 
 
-;exec score-play(score-sort(score-merge(*drumscore*,*piecescore*)))
-exec score-play({{0 1 {BSOUND pitch: 69}}})
+exec score-play(score-sort(score-merge(*drumscore*,*piecescore*)))

@@ -11,6 +11,8 @@ Next, install all required packages for gameanimator.py, gameextractor.py, datat
 
 
 nyquist:
+A guide to install Nyquist can be found here: https://www.cs.cmu.edu/~15322/resources/
+
 Make sure you have successfully run tpprep.py. Then, you can run tp.sal, which will use the score files to create music. There are some preloaded instruments in tp.sal, but these are meant to be played with to generate different sounds. As currently populated:
 -The drum score will call different drum sounds that are saved to the same directory as .wav files
 -The bishop sound (BSOUND) is a randomly generated baseline
