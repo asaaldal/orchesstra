@@ -102,4 +102,4 @@ function hihathit(pitch: 67, vel: 100)
 
 
 
-exec s-save(.2 * timed-seq(score-sort(score-merge(*drumscore*,*piecescore*))), 1000000000, "./orchesstraoutput.wav")
+exec s-save(.2 * timed-seq(score-sort(score-merge(*drumscore*,*piecescore*))), 44000 * 185 , "./orchesstraoutput.wav")
